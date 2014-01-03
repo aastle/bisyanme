@@ -1,0 +1,353 @@
+﻿/* DEFAULTS
+----------------------------------------------------------*/
+
+
+body   
+{
+    background: #b6b7bc;
+    font-size: .80em;
+    font-family: "Helvetica Neue", "Lucida Grande", "Segoe UI", Arial, Helvetica, Verdana, sans-serif;
+    margin: 0px;
+    padding: 0px;
+    color: #696969;
+}
+
+a:link, a:visited
+{
+    color: #666666;
+}
+
+a:hover
+{
+    color: #666666;
+    text-decoration: none;
+}
+
+a:active
+{
+    color: #666666;
+}
+
+p
+{
+    margin-bottom: 10px;
+    line-height: 1.6em;
+}
+
+
+/* HEADINGS   
+----------------------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 1.5em;
+    color: #666666;
+    font-variant: small-caps;
+    text-transform: none;
+    font-weight: 200;
+    margin-bottom: 0px;
+}
+
+h1
+{
+    font-family: 'Rokkitt', serif;
+    font-size: 1.9em;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+h2
+{
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+h3
+{
+    font-size: 1.2em;
+}
+
+h4
+{
+    font-size: 1.1em;
+}
+
+h5, h6
+{
+    font-size: 1em;
+}
+
+/* this rule styles <h1> and <h2> tags that are the 
+first child of the left and right table columns */
+.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2
+{
+    margin-top: 0px;
+}
+
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+.bodyDataEntry{
+    background: #F1A993;
+}
+.page
+{
+    width: 400px;
+    background-color: #fff;
+    margin: 20px auto 0px auto;
+    border: 1px solid #496077;    
+    
+}
+.pageDataEntry{
+    width: 600px;
+    background-color: #fff;
+    margin: 20px auto 0px auto;
+    padding-left: 10px;
+    border: 1px solid #496077;    
+}
+.pageCategories
+{
+    width: 600px;
+    background-color: #fff;
+    margin: 20px auto 0px auto;
+    border: 1px solid #496077;
+    padding:5px;
+    
+}
+.header
+{
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    background: #4b6c9e;
+    width: 100%;
+    font-size:smaller;
+    color:white;
+    text-decoration:none;
+}
+.header a
+{
+    text-decoration:none;
+    color:white;
+}
+.header img
+{
+    padding: 0px 0px 0px 4px;
+}
+.header h1
+{
+    font-weight: 700;
+    margin: 0px;
+    padding: 0px 0px 0px 20px;
+    color: #f9f9f9;
+    border: none;
+    line-height: 2em;
+    font-size: 2em;
+}
+
+.main
+{
+    padding: 0px 12px;
+    margin: 12px 8px 8px 8px;
+    
+}
+
+.leftCol
+{
+    padding: 6px 0px;
+    margin: 12px 8px 8px 8px;
+    width: 200px;
+    min-height: 200px;
+}
+
+.footer
+{
+    color: #4e5766;
+    padding: 8px 0px 0px 0px;
+    margin: 0px auto;
+    text-align: center;
+    line-height: normal;
+}
+
+
+/* TAB MENU   
+----------------------------------------------------------*/
+
+div.hideSkiplink
+{
+    background-color:#3a4f63;
+    width:100%;
+}
+
+/* TABLES
+-----------------------------------------------------------*/
+table {
+    border-spacing: 0;
+    padding: 0;
+    outline: 0;
+    margin: 0;
+    border: 0;
+    border-collapse: collapse;
+    width: 426px;
+    table-layout: fixed;
+    text-align: left;
+}
+td.categoryClass {
+  font-weight: bold;
+  color: #cc3300;
+  text-align: center;
+}
+td.cebuanoCol {
+    text-align: center;
+}
+th,td {
+    border-bottom: 2px solid;
+    border-bottom-color: #b6b7bc;
+}
+/* FORM ELEMENTS   
+----------------------------------------------------------*/
+
+fieldset
+{
+    margin: 1em 0px;
+    padding: 1em;
+    border: 1px solid #ccc;
+}
+
+fieldset p 
+{
+    margin: 2px 12px 10px 10px;
+}
+
+fieldset.login label, fieldset.register label, fieldset.changePassword label
+{
+    display: block;
+}
+
+fieldset label.inline 
+{
+    display: inline;
+}
+
+legend 
+{
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;
+}
+
+input.textEntry 
+{
+    width: 350px;
+    border: 1px solid #ccc;
+}
+
+input.passwordEntry 
+{
+    width: 320px;
+    border: 1px solid #ccc;
+}
+
+
+/* MISC  
+----------------------------------------------------------*/
+
+.clear
+{
+    clear: both;
+}
+
+.title
+{
+    display: block;
+    float: left;
+    text-align: left;
+    width: auto;
+}
+
+
+.failureNotification
+{
+    font-size: 1.2em;
+    color: Red;
+}
+
+.bold
+{
+    font-weight: bold;
+}
+
+.submitButton
+{
+    text-align: center;
+    font-weight: bold;
+}
+.centerDiv
+{
+    margin: 0px auto;
+    width: 23%;
+}
+.centerAllTranslationsDiv
+{
+    margin: 0px auto;
+    width: 32%;
+}
+input.css3button {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #ffffff;
+	padding: 12px 18px;
+	background: -moz-linear-gradient(
+		top,
+		#7979b8 0%,
+		#7979b8);
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(#7979b8),
+		to(#7979b8));
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #7979b8;
+	-moz-box-shadow:
+		0px 1px 2px rgba(000,000,000,0.4),
+		inset 0px 1px 0px rgba(255,255,255,0.2);
+	-webkit-box-shadow:
+		0px 1px 2px rgba(000,000,000,0.4),
+		inset 0px 1px 0px rgba(255,255,255,0.2);
+	box-shadow:
+		0px 1px 2px rgba(000,000,000,0.4),
+		inset 0px 1px 0px rgba(255,255,255,0.2);
+	text-shadow:
+		0px -1px 3px rgba(255,255,255,0),
+		0px 1px 0px rgba(255,255,255,0);
+}
+
+
+
+
+#categoryFloater 
+{
+    color: blue;
+    /* set the width and height of the floater */
+    width: 120px;
+    height: 20px;
+    
+    position: fixed;
+    
+    /* set it all the way to the right and halfway down the page */
+    left: 100%;
+    top: 50%;
+    
+    /* bring it back to the left 40px so that you can see the graphic */
+    margin-left: -36%;
+    
+    /* bring the graphic up half of it's height so that it is pefectly vertically centered */
+    margin-top: -5%;
+    
+    /* set the display to block so that the entire graphic is clickable */
+    display: block;
+    
+    /* set the z-index so high it will always be on top */
+    z-index: 99999;
+}
