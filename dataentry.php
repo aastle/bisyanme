@@ -64,7 +64,7 @@
             <div><br/></div>
             <button type="submit" role="button" id="insertButton" aria-disabled="false" value="insert" 
                     class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                <span class="ui-button-text">*insert*</span>
+                <span class="ui-button-text">insert</span>
             </button>
             <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <button type="submit" role="button" id="updateButton" value="update" aria-disabled="false"
