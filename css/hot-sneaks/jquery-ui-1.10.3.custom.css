@@ -10,6 +10,11 @@
     width: 600px;
     height: auto;
 }
+.intputLabels{
+    font-weight: bolder;
+    font-size: large;
+    color: #092947;
+}
 /* Layout helpers
 ----------------------------------*/
 .ui-helper-hidden {
