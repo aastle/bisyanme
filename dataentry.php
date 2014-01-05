@@ -59,7 +59,8 @@
 
         <div><br/></div>
         <form name="dataentryform" method="post">
-            English:&nbsp;<input type="text" name="englishinput" id="english" />&nbsp;&nbsp;&nbsp;Cebuano:&nbsp;<input type="text" id="cebuano" name="cebuanoinput" />
+            <span class="intputLabels">English:&nbsp;</span><input type="text" name="englishinput" id="english" />
+            &nbsp;&nbsp;&nbsp;<span class="intputLabels">Cebuano:&nbsp;</span><input type="text" id="cebuano" name="cebuanoinput" />
             <div><span id="resultTagId" style="font-size:medium;font-weight:bold;"></span></div>
             <div><br/></div>
             <button type="submit" role="button" id="insertButton" aria-disabled="false" value="insert" 
