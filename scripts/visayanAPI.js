@@ -59,17 +59,20 @@ var API = {};
 	     var decoded = $.parseJSON(data);
             
                if(decoded.result){
-                    $("#resultTagId").html("Insert successful!  English: " + decoded.english + ", Cebuano: " + decoded.cebuano); 
+                    $("#resultTagId").html("Insert successful!  English: " + decoded.english + " | Cebuano: " + decoded.cebuano).css("color","green"); 
+                    $(englishinput).val("");
+                    $(cebuanoinpunt).val("");
                     API.inserted = true;
                }
                 else if (decoded.result != true && decoded.message == undefined) {
-                   $("#resultTagId").html("Message: Translation alread exists in the data base.<br/> English: " + decoded.english + " and Cebuano: "  + decoded.cebuano); 
+                   $("#resultTagId").html("Translation alread exists in the data base.<br/> English: " 
+                       + decoded.english + " | Cebuano: "  + decoded.cebuano).css("color","red"); 
                    $("#english").val("");
                    $("#cebuano").val("");
                    API.inserted = false;
                 }
                 else if(decoded.result != true && decoded.message != undefined){
-                    $("#resultTagId").html("Message: "+decoded.message+".  English: " + decoded.english + " and Cebuano: "  + decoded.cebuano); 
+                    $("#resultTagId").html("Message: "+decoded.message+".  English: " + decoded.english + " | Cebuano: "  + decoded.cebuano).css("color","red"); 
                    $("#english").val("");
                    $("#cebuano").val("");
                    API.inserted = false;
@@ -144,7 +147,14 @@ var API = {};
           
         };
         
-        
+       API.append_entered = function(english,cebuano,listID){
+            var _english = $(english).val();
+            var _cebuano = $(cebuano).val();
+               $(listID).prepend("<div class='enteredRow'><span style='width:150px;float:left;'>" + API.UpperCaseFirstLetter(_english) + "</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>" + API.UpperCaseFirstLetter(_cebuano) + "</span></div>"); 
+                
+           $(".listRow:odd").css("background-color","#E8E8E8");
+          
+        };        
         API.Compare = function(el1,el2,arrindex) {
             return el1[arrindex].toLowerCase() == el2[arrindex].toLowerCase() ? 0 : (el1[arrindex].toLowerCase() < el2[arrindex].toLowerCase() ? -1 : 1);
         };
