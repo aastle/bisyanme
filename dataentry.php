@@ -48,10 +48,12 @@
         }
     </style>
 </head>
-<body class="bodyDataEntry">
+<body>
     <div class="pageDataEntry" data-role="page">
+        <div style="text-align:right;">
         <div class="ui-state-default ui-corner-all homediv"  title="Go Home">
             <a href="http://bisayan.me"><span class="ui-icon ui-icon-home"></span>home</a>
+        </div>
         </div>
         <?php echo '<h1>Data Entry for bisayan.me</h1>'; ?>
         <?php echo '<h3>Enter the English <b>and</b> Cebuano word to update the database:</h3>'; ?>
@@ -59,7 +61,7 @@
 
         <div><br/></div>
         <form name="dataentryform" method="post">
-            English:&nbsp;<input type="text" name="englishinput" id="english" />&nbsp;&nbsp;&nbsp;Cebuano:&nbsp;<input type="text" id="cebuano" name="cebuanoinput" />
+            <span>English:&nbsp;</span><input type="text" name="englishinput" id="english" />&nbsp;&nbsp;&nbsp;Cebuano:&nbsp;<input type="text" id="cebuano" name="cebuanoinput" />
             <div><span id="resultTagId" style="font-size:medium;font-weight:bold;"></span></div>
             <div><br/></div>
             <button type="submit" role="button" id="insertButton" aria-disabled="false" value="insert" 
