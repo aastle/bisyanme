@@ -61,12 +61,13 @@
 
         <div><br/></div>
         <form name="dataentryform" method="post">
-            <span>English:&nbsp;</span><input type="text" name="englishinput" id="english" />&nbsp;&nbsp;&nbsp;Cebuano:&nbsp;<input type="text" id="cebuano" name="cebuanoinput" />
+            <span class="intputLabels">English:&nbsp;</span><input type="text" name="englishinput" id="english" />
+            &nbsp;&nbsp;&nbsp;<span class="intputLabels">Cebuano:&nbsp;</span><input type="text" id="cebuano" name="cebuanoinput" />
             <div><span id="resultTagId" style="font-size:medium;font-weight:bold;"></span></div>
             <div><br/></div>
             <button type="submit" role="button" id="insertButton" aria-disabled="false" value="insert" 
                     class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                <span class="ui-button-text">*insert*</span>
+                <span class="ui-button-text">insert</span>
             </button>
             <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <button type="submit" role="button" id="updateButton" value="update" aria-disabled="false"
