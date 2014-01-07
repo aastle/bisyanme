@@ -16,9 +16,10 @@
     font-size: large;
     color: #363636;
 }
+/* validation */
 input:required{
     border-color: #000066;
-    border-width: 2px;
+    border-width: 1px;
 }
 input:valid {
 	border: 1px solid green;
