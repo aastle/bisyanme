@@ -19,7 +19,6 @@
                 //var buttonVal = $("#insertButton").val();
                     
                 visayan.ajax_insert("#resultTagId","#english","#cebuano","./mysql/insert.php"); 
-                visayan.append_entered("#english","#cebuano","#enteredDiv",visayan.inserted);
                 $("#english").val("");
                 $("#cebuano").val("");
                         
@@ -27,7 +26,7 @@
             $("#updateButton").click(function(e) {
                 e.preventDefault();
                 visayan.ajax_update("#resultTagId","#english","#cebuano","./mysql/update.php"); 
-                visayan.append_entered("#english","#cebuano","#enteredDiv",visayan.updated);
+        
             });
  
             $("#resetButton").click(function(e){
@@ -61,6 +60,8 @@
         }
         .insertedupdated{
             text-decoration: underline;
+            width: 150px;
+            float: left;
         }
         #insertButton{
             color: darkgreen;
@@ -120,7 +121,8 @@
             <div><br/></div>
             <div style="font-weight: bold;font-size: medium">Inserted/Updated</div>
             <div><span style='width:150px;float:left;' class="insertedupdated">English</span> 
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="insertedupdated">Cebuano</span></div>            
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="insertedupdated">Cebuano</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="insertedupdated">Status</span></div>            
             <div id="enteredDiv"></div>
             <div><br/></div>
             <div><br/></div>            
