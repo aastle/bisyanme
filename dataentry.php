@@ -70,9 +70,10 @@
         <div><br/></div>
         <form name="dataentryform" method="post">
             <span class="intputLabels">English:&nbsp;</span>
-            <input type="text" name="englishinput" id="english" spellcheck="true" />
-            &nbsp;&nbsp;&nbsp;<span class="intputLabels">Cebuano:&nbsp;</span>
-            <input type="text" id="cebuano" name="cebuanoinput" spellcheck="false" />
+            <input type="text" name="englishinput" id="english" spellcheck="true" required />
+            &nbsp;&nbsp;&nbsp;
+            <span class="intputLabels">Cebuano:&nbsp;</span>
+            <input type="text" id="cebuano" name="cebuanoinput" spellcheck="false" required />
             
             <div><br/></div>
             <div><span id="resultTagId" style="font-size:medium;font-weight:bold;"></span></div>
