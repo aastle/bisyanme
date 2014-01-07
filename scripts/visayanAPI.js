@@ -31,213 +31,251 @@
 
 
 var visayan = (function () {
-var API = {};
-	API.ajax_search = function (resultTagId,input,postURL){ 
-	  $(resultTagId).show(); 
-	  var search_val=$(input).val(); 
-	  $.get(postURL, {myinput : search_val}, function(data){
-	   if (data.length>0){ 
-               var translation = $.parseJSON(data);
-               if(translation.english.toLowerCase() == search_val.toLowerCase()){
-		 $(resultTagId).html("English: " + API.UpperCaseFirstLetter(translation.english) +", Cebuano: " + API.UpperCaseFirstLetter(translation.cebuano)); 
-           }
-           else if(translation.cebuano.toLowerCase() === search_val.toLowerCase()) {
-		 $(resultTagId).html("Cebuano: " + API.UpperCaseFirstLetter(translation.cebuano) +", English: " + API.UpperCaseFirstLetter(translation.english)); 
-               
-           }
-		 $(input).val("");
-	   } 
-	  }) 
-	};
-        
-        API.inserted = false;
-        API.ajax_insert = function (resultTagId, englishinput, cebuanoinput,postURL) {
-            	  $(resultTagId).show(); 
-	  var english_val=$(englishinput).val(); 
-          var cebuano_val=$(cebuanoinput).val();
-	  $.post(postURL, {english : english_val, cebuano :cebuano_val}, function(data){
-	     var decoded = $.parseJSON(data);
-            
-               if(decoded.result){
-                    $("#resultTagId").html("Insert successful!  English: " + decoded.english + " | Cebuano: " + decoded.cebuano).css("color","green"); 
-                    $(englishinput).val("");
-                    $(cebuanoinpunt).val("");
-                    API.inserted = true;
-               }
-                else if (decoded.result != true && decoded.message == undefined) {
-                   $("#resultTagId").html("Translation alread exists in the data base.<br/> English: " 
-                       + decoded.english + " | Cebuano: "  + decoded.cebuano).css("color","red"); 
-                   $("#english").val("");
-                   $("#cebuano").val("");
-                   API.inserted = false;
-                }
-                else if(decoded.result != true && decoded.message != undefined){
-                    $("#resultTagId").html("Message: "+decoded.message+".  English: " + decoded.english + " | Cebuano: "  + decoded.cebuano).css("color","red"); 
-                   $("#english").val("");
-                   $("#cebuano").val("");
-                   API.inserted = false;
-                   
-                }
-	  }) 
-        };
-        API.updated = false;
-        API.ajax_update = function (resultTagId, englishinput, cebuanoinput,postURL) {
+    var API = {};
+    API.ajax_search = function (resultTagId,input,postURL){ 
         $(resultTagId).show(); 
-	  var english_val=$(englishinput).val(); 
-          var cebuano_val=$(cebuanoinput).val();
-	  $.post(postURL, {english : english_val, cebuano :cebuano_val}, function(data){
-	   if (data.result){ 
-               API.updated = true;
-            $("#resultTagId").html("Update successful"); 
-           }
+        var search_val=$(input).val(); 
+        $.get(postURL, {
+            myinput : search_val
+        }, function(data){
+            if (data.length>0){ 
+                var translation = $.parseJSON(data);
+                if(translation.english.toLowerCase() == search_val.toLowerCase()){
+                    $(resultTagId).html("English: " + API.UpperCaseFirstLetter(translation.english) +", Cebuano: " + API.UpperCaseFirstLetter(translation.cebuano)); 
+                }
+                else if(translation.cebuano.toLowerCase() === search_val.toLowerCase()) {
+                    $(resultTagId).html("Cebuano: " + API.UpperCaseFirstLetter(translation.cebuano) +", English: " + API.UpperCaseFirstLetter(translation.english)); 
+               
+                }
+                $(input).val("");
+            } 
+        }) 
+    };
+    API.status = "unprocessed";
+    API.inserted = false;
+    API.ajax_insert = function (resultTagId, englishinput, cebuanoinput,postURL) {
+        $(resultTagId).show(); 
+        var english_val=$(englishinput).val(); 
+        var cebuano_val=$(cebuanoinput).val();
+        $.post(postURL, {
+            english : english_val, 
+            cebuano :cebuano_val
+        }, function(data){
+            var decoded = $.parseJSON(data);
+            
+            if(decoded.result){
+                API.inserted = true;
+                API.status = "inserted";
+                $("#resultTagId").html("Insert successful!  English: " + decoded.english + " | Cebuano: " + decoded.cebuano).css("color","green"); 
+                
+                API.append_entered(decoded.english, decoded.cebuano, "#enteredDiv", "inserted");
+                $(englishinput).val("");
+                $(cebuanoinpunt).val("");
+                    
+            }
+            else if (decoded.result != true && decoded.message == undefined) {
+                API.inserted = false;
+                API.status = "exists";
+                
+                $("#resultTagId").html("Translation alread exists in the data base.<br/> English: " 
+                    + decoded.english + " | Cebuano: "  + decoded.cebuano).css("color","red"); 
+                API.append_entered(decoded.english, decoded.cebuano, "#enteredDiv", "exists");
+                $("#english").val("");
+                $("#cebuano").val("");
+                   
+            }
+            else if(decoded.result != true && decoded.message != undefined){
+                API.inserted = false;
+                API.status = "failed";
+                $("#resultTagId").html("Message: "+decoded.message+".  English: " + decoded.english + " | Cebuano: "  + decoded.cebuano).css("color","red"); 
+                
+                API.append_entered(decoded.english, decoded.cebuano, "#enteredDiv", "failed");
+                $("#english").val("");
+                $("#cebuano").val("");
+                   
+            }
+               
+        }) 
+    };
+    API.updated = false;
+    API.ajax_update = function (resultTagId, englishinput, cebuanoinput,postURL) {
+        $(resultTagId).show(); 
+        var english_val=$(englishinput).val(); 
+        var cebuano_val=$(cebuanoinput).val();
+        $.post(postURL, {
+            english : english_val, 
+            cebuano :cebuano_val
+        }, function(data){
+            if (data.result){ 
+                API.updated = true;
+                API.status = "updated";
+                $("#resultTagId").html("Update successful"); 
+                API.append_entered(english_val, cebuano_val, "#enteredDiv", "updated");
+            
+            }
             else if(data.result == false && data.message == undefined){
                 API.updated = false;
+                API.status = "failed";
                 $("#resultTagId").html("Update failed.  Unknown database error! "); 
+                API.append_entered(english_val, cebuano_val, "#enteredDiv", "updated");
+                
             }
             else if(!data.result && data.message != undefined){
                 API.updated = false;
+                API.status = "failed";
                 $("#resultTagId").html("Update failed. Database error = " + data.message); 
+                API.append_entered(english_val, cebuano_val, "#enteredDiv", "updated");
+                
             }
      	   
-	  }) 
-        };
-        API.list = function(listID,sortEngId,sortCebuId, postURL){
-          $(listID).show(); 
-          $(sortEngId).show();
-          $(sortCebuId).show();
+        }) 
+    };
+    API.list = function(listID,sortEngId,sortCebuId, postURL){
+        $(listID).show(); 
+        $(sortEngId).show();
+        $(sortCebuId).show();
 	   
-	  $.get(postURL, function(data){
+        $.get(postURL, function(data){
 	    
-               var decoded = $.parseJSON(data);
+            var decoded = $.parseJSON(data);
                
-               $(sortCebuId).click(function(e){
-                   e.preventDefault();
-                    decoded.sort(function(el1, el2) {
+            $(sortCebuId).click(function(e){
+                e.preventDefault();
+                decoded.sort(function(el1, el2) {
                         
-                        return API.Compare(el1, el2, "cebuano");
+                    return API.Compare(el1, el2, "cebuano");
                         
-                    });
-                    API.RenderList(decoded, listID);
-               });
-               
-               $(sortEngId).click(function(e){
-                   e.preventDefault();
-                    decoded.sort(function(el1,el2){
-                        return API.Compare(el1, el2, "english");
-                    });
-                    API.RenderList(decoded, listID);
-               });
-               
-               API.RenderList(decoded, listID);
-               
-          });
-               
-           };
-        
-        API.RenderList = function(decoded,listID){
-          $(listID).empty();
-               $.each(decoded, function(index,value){
-                var english = value.english;
-                var cebuano = value.cebuano;
-
-               $(listID).append("<div class='listRow'><span style='width:150px;float:left;'>" + API.UpperCaseFirstLetter(english) + "</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>" + API.UpperCaseFirstLetter(cebuano) + "</span></div>"); 
-                
-               });
-           $(".listRow:odd").css("background-color","#E8E8E8");
-          
-        };
-        
-       API.append_entered = function(english,cebuano,listID){
-            var _english = $(english).val();
-            var _cebuano = $(cebuano).val();
-               $(listID).prepend("<div class='enteredRow'><span style='width:150px;float:left;'>" + API.UpperCaseFirstLetter(_english) + "</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>" + API.UpperCaseFirstLetter(_cebuano) + "</span></div>"); 
-                
-           $(".listRow:odd").css("background-color","#E8E8E8");
-          
-        };        
-        API.Compare = function(el1,el2,arrindex) {
-            return el1[arrindex].toLowerCase() == el2[arrindex].toLowerCase() ? 0 : (el1[arrindex].toLowerCase() < el2[arrindex].toLowerCase() ? -1 : 1);
-        };
-        
-        API.UpperCaseFirstLetter = function(value){
-                var firstLetter = value.substring(0,1);
-                var formalWord = value.replace(firstLetter, firstLetter.toUpperCase());
-                return formalWord;
-       }
-        API.localizePage = function(lang){
-            // assume page is a collection of HTML elements
-            // Filter elements that contain the id attribute
-            // Iterate through collection looking for 
-            // non-empty text attributes/properties
-            // Ignore textboxes
-            var page = $('*[id]');
-            $.each(page, function(){
-                var currentId = $(this).attr("id");
-                if(currentId){
-                    var jqcurrentId = '#' + currentId;
-                    var text = $(jqcurrentId).text();
-                    if(text){
-                        // start calling helper functions
-                        // to localize text based on language 
-                        // choice
-                         API.getLocalizedText(currentId,lang,jqcurrentId);
-                        
-                    
-                    }else if($(jqcurrentId).val()){
-                        // form elements use val() instead of text()
-                        // for innput html elements
-                        API.getLocalizedText(currentId,lang,jqcurrentId);
-                    }
-                    
-                }
+                });
+                API.RenderList(decoded, listID);
             });
-        }
-        API.returnData = "";
-        API.getLocalizedText = function(id,lang,selectId){
-            // jQuery's ajax function is asynchronous, so returning from 
-            // a javascript function might not return the value returned from 
-            // the asynchronous call.  Use success or complete to wait for jQuery
-            // ajax to return before returning from the enclosing function
-            var returnText = '';
-               $.get("./mysql/localize.php",{language:lang,tagId:id},function(){
-              })
-              .success(function(data){
-                  var respObj = $.parseJSON(data);
-                  var returnText = respObj.responseText;
-                  API.setLocalizedText(selectId,returnText);
-              });
-              
-        };
-     	   
-	API.setLocalizedText = function(id,textLocalized){
-            
-            if($(id).get(0).tagName.toLowerCase() != "input" && id != "#listDiv"){
-                $(id).text(textLocalized);
-            } else if($(id).get(0).tagName.toLowerCase() == "input"){
-                if ($(id).attr("type") == "submit"){
-                    $(id).val(textLocalized);
-                }
-            }
-        }; 
-        API.GetCategories = function(){
-               var returnText = '';
-               $.get("./mysqlGetCategories.php",function(){
-              })
-              .success(function(data){
-                  var respObj = $.parseJSON(data);
-                  var returnText = respObj.responseText;
-                  return returnText;
-              });
+               
+            $(sortEngId).click(function(e){
+                e.preventDefault();
+                decoded.sort(function(el1,el2){
+                    return API.Compare(el1, el2, "english");
+                });
+                API.RenderList(decoded, listID);
+            });
+               
+            API.RenderList(decoded, listID);
+               
+        });
+               
+    };
+        
+    API.RenderList = function(decoded,listID){
+        $(listID).empty();
+        $.each(decoded, function(index,value){
+            var english = value.english;
+            var cebuano = value.cebuano;
 
-        };
+            $(listID).append("<div class='listRow'><span style='width:150px;float:left;'>" + API.UpperCaseFirstLetter(english) + "</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>" + API.UpperCaseFirstLetter(cebuano) + "</span></div>"); 
+                
+        });
+        $(".listRow:odd").css("background-color","#E8E8E8");
+          
+    };
         
-        API.SetCopyright = function() {
-          var copyText = "";
-          var date = new Date();
-          var thisYear = date.getFullYear();
-          copyText = "Copyright &COPY; " + thisYear + " Deus Ex Machine, LLC";
-          return copyText;
-        };
+    API.append_entered = function(english,cebuano,listID, status){
+         $(listID).prepend("<div class='enteredRow'><span class='insertedupdated'>" 
+            + API.UpperCaseFirstLetter(english) 
+            + "</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class='insertedupdated'>" 
+            + API.UpperCaseFirstLetter(cebuano) + 
+            "</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class='insertedupdated'>"
+            + status
+            +"</span></div>"); 
+                
+        $(".enteredRow:odd").css("background-color","#E8E8E8");
+           
+          
+    };     
         
-	return API;
+    API.Compare = function(el1,el2,arrindex) {
+        return el1[arrindex].toLowerCase() == el2[arrindex].toLowerCase() ? 0 : (el1[arrindex].toLowerCase() < el2[arrindex].toLowerCase() ? -1 : 1);
+    };
+        
+    API.UpperCaseFirstLetter = function(value){
+        var firstLetter = value.substring(0,1);
+        var formalWord = value.replace(firstLetter, firstLetter.toUpperCase());
+        return formalWord;
+    }
+    API.localizePage = function(lang){
+        // assume page is a collection of HTML elements
+        // Filter elements that contain the id attribute
+        // Iterate through collection looking for 
+        // non-empty text attributes/properties
+        // Ignore textboxes
+        var page = $('*[id]');
+        $.each(page, function(){
+            var currentId = $(this).attr("id");
+            if(currentId){
+                var jqcurrentId = '#' + currentId;
+                var text = $(jqcurrentId).text();
+                if(text){
+                    // start calling helper functions
+                    // to localize text based on language 
+                    // choice
+                    API.getLocalizedText(currentId,lang,jqcurrentId);
+                        
+                    
+                }else if($(jqcurrentId).val()){
+                    // form elements use val() instead of text()
+                    // for innput html elements
+                    API.getLocalizedText(currentId,lang,jqcurrentId);
+                }
+                    
+            }
+        });
+    }
+    API.returnData = "";
+    API.getLocalizedText = function(id,lang,selectId){
+        // jQuery's ajax function is asynchronous, so returning from 
+        // a javascript function might not return the value returned from 
+        // the asynchronous call.  Use success or complete to wait for jQuery
+        // ajax to return before returning from the enclosing function
+        var returnText = '';
+        $.get("./mysql/localize.php",{
+            language:lang,
+            tagId:id
+        },function(){
+            })
+        .success(function(data){
+            var respObj = $.parseJSON(data);
+            var returnText = respObj.responseText;
+            API.setLocalizedText(selectId,returnText);
+        });
+              
+    };
+     	   
+    API.setLocalizedText = function(id,textLocalized){
+            
+        if($(id).get(0).tagName.toLowerCase() != "input" && id != "#listDiv"){
+            $(id).text(textLocalized);
+        } else if($(id).get(0).tagName.toLowerCase() == "input"){
+            if ($(id).attr("type") == "submit"){
+                $(id).val(textLocalized);
+            }
+        }
+    }; 
+    API.GetCategories = function(){
+        var returnText = '';
+        $.get("./mysqlGetCategories.php",function(){
+            })
+        .success(function(data){
+            var respObj = $.parseJSON(data);
+            var returnText = respObj.responseText;
+            return returnText;
+        });
+
+    };
+        
+    API.SetCopyright = function() {
+        var copyText = "";
+        var date = new Date();
+        var thisYear = date.getFullYear();
+        copyText = "Copyright &COPY; " + thisYear + " Deus Ex Machine, LLC";
+        return copyText;
+    };
+        
+    return API;
 }());
