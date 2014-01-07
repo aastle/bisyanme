@@ -12,27 +12,31 @@
             $(".listRow").css("visibility","hidden");
             $("#insertButton").button({icons: {secondary : "ui-icon-circle-plus"}});
             $("#updateButton").button({icons: {secondary : "ui-icon-circle-check"}});
-            $("#cancelButton").button({icons: {secondary : "ui-icon-circle-close"}});
+            $("#resetButton").button({icons: {secondary : "ui-icon-circle-close"}});
+            
             $("#insertButton").click(function(e){ 
                 e.preventDefault(); 
                 //var buttonVal = $("#insertButton").val();
                     
                 visayan.ajax_insert("#resultTagId","#english","#cebuano","./mysql/insert.php"); 
-                visayan.append_entered("#english","#cebuano","#enteredDiv");
+                visayan.append_entered("#english","#cebuano","#enteredDiv",visayan.inserted);
                 $("#english").val("");
                 $("#cebuano").val("");
                         
             }); 
             $("#updateButton").click(function(e) {
                 e.preventDefault();
-                 visayan.ajax_update("#resultTagId","#english","#cebuano","./mysql/update.php"); 
+                visayan.ajax_update("#resultTagId","#english","#cebuano","./mysql/update.php"); 
+                visayan.append_entered("#english","#cebuano","#enteredDiv",visayan.updated);
             });
-            $("#cancelButton").click(function(e){
-               e.preventDefault();
+ 
+            $("#resetButton").click(function(e){
+               e.preventDefault(); 
                $("#english").val("");
                $("#cebuano").val("");
+              $("#resultTagId").html("");
             });     
-                 
+    
             $("#listButton").click(function(e){
                 e.preventDefault();
                $(".listRow").css("visibility","visible");                
@@ -57,6 +61,15 @@
         }
         .insertedupdated{
             text-decoration: underline;
+        }
+        #insertButton{
+            color: darkgreen;
+        }
+        #updateButton {
+            color: orangered;
+        }
+        #resetButton{
+            color:darkred
         }
     </style>
 </head>
@@ -87,16 +100,19 @@
                     class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
                 <span class="ui-button-text">insert</span>
             </button>
+                
             <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
             <button type="submit" role="button" id="updateButton" value="update" aria-disabled="false"
                     class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
                 <span class="ui-button-text">update</span>
             </button>
+            
             <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
-            <button type="submit" role="button" aria-disabled="false" id="cancelButton" value="cancel"
+            <button type="button" aria-disabled="false" id="resetButton" value="reset"
                     class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-                <span class="ui-button-text">cancel</span>
+                <span class="ui-button-text">reset</span>
             </button>
             </div>
             
