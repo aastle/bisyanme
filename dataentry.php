@@ -15,7 +15,7 @@
             $("#cancelButton").button({icons: {secondary : "ui-icon-circle-close"}});
             $("#insertButton").click(function(e){ 
                 e.preventDefault(); 
-                var buttonVal = $("#insertButton").val();
+                //var buttonVal = $("#insertButton").val();
                     
                 visayan.ajax_insert("#resultTagId","#english","#cebuano","./mysql/insert.php"); 
                 visayan.append_entered("#english","#cebuano","#enteredDiv");
@@ -27,7 +27,11 @@
                 e.preventDefault();
                  visayan.ajax_update("#resultTagId","#english","#cebuano","./mysql/update.php"); 
             });
-                 
+            $("#cancelButton").click(function(e){
+               e.preventDefault();
+               $("#english").val("");
+               $("#cebuano").val("");
+            });     
                  
             $("#listButton").click(function(e){
                 e.preventDefault();
