@@ -7,6 +7,7 @@
     <script src="scripts/jquery-1.9.1.js" type="text/javascript"></script>
     <script src="scripts/jquery-ui-1.10.3.custom.js" type="text/javascript"></script>
     <script src="scripts/visayanAPI.js" type="text/javascript"></script>
+    <script src="scripts/jquery.jsonp.js" type="text/javascript"></script>
     <script type='text/javascript'> 
         $(document).ready(function(){ 
             $(".listRow").css("visibility","hidden");
@@ -18,7 +19,9 @@
                 e.preventDefault(); 
                 //var buttonVal = $("#insertButton").val();
                     
-                visayan.ajax_insert("#resultTagId","#english","#cebuano","./mysql/insert.php"); 
+                //visayan.ajax_insert("#resultTagId","#english","#cebuano","./mysql/insert.php"); 
+                visayan.jsonplib("#english","#bighugelabs",
+                "http://words.bighugelabs.com/api/2/faf56bfe40e03e6aa55935fa70b79e39/")
                 $("#english").val("");
                 $("#cebuano").val("");
                         
@@ -96,6 +99,8 @@
             <div><br/></div>
             <div><span id="resultTagId" style="font-size:medium;font-weight:bold;"></span></div>
             <div><br/></div>
+            <div>Results from BigHugeLabs</div>
+            <div id="bighugelabs"></div>
             <div>
             <button type="submit" role="button" id="insertButton" aria-disabled="false" value="insert" 
                     class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
