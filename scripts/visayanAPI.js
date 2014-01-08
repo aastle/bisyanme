@@ -259,24 +259,7 @@ var visayan = (function () {
     }; 
     
     //get a synonym for the Engish word entered in the dataentry page
-    API.bighugelabs = function(input,id,url){
-        var _input = $(input).val();
-        var _url = url + _input +"/json";
-        $.ajax({
-            crossDomain: true,
-            type:"GET",
-            contentType: "application/json; charset=utf-8",
-            async:true,
-            url: _url,
-            //data: {projectID:1},
-            dataType: "jsonp",                
-            jsonpCallback: 'fnsuccesscallback'
-        }).done(function(data,textStatus, xhr){
-            $(id).html(xhr.status);
-        }).fail(function(){
-            $(id).html("404 not found from Alan");
-        });
-    }
+
     API.jsonplib = function(input,id,url){
         var _input = $(input).val();
         var _url = url + _input +"/json";
@@ -284,11 +267,18 @@ var visayan = (function () {
             url:_url,
             callbackParameter: "callback",
             complete: function(xOptions, textStatus){
-                $(id).html(textStatus);
+                var message = "";
+                if(textStatus === "success"){
+                    message = "spelled correctly";
+                }else if(textStatus === "error"){
+                    message = "misspelled word!";
+                }
+                    
+                $(id).html(message);
             },
             error: function() {
                 // Will be notified of an error requesting 'a-service'
-                $(id).html("error from Alan")
+                $(id).html("Alan error from Alan")
             }
         });
     }
