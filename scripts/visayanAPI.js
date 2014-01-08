@@ -177,7 +177,7 @@ var visayan = (function () {
     };
         
     API.append_entered = function(english,cebuano,listID, status){
-         $(listID).prepend("<div class='enteredRow'><span class='insertedupdated'>" 
+        $(listID).prepend("<div class='enteredRow'><span class='insertedupdated'>" 
             + API.UpperCaseFirstLetter(english) 
             + "</span><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class='insertedupdated'>" 
             + API.UpperCaseFirstLetter(cebuano) + 
@@ -257,6 +257,41 @@ var visayan = (function () {
             }
         }
     }; 
+    
+    //get a synonym for the Engish word entered in the dataentry page
+    API.bighugelabs = function(input,id,url){
+        var _input = $(input).val();
+        var _url = url + _input +"/json";
+        $.ajax({
+            crossDomain: true,
+            type:"GET",
+            contentType: "application/json; charset=utf-8",
+            async:true,
+            url: _url,
+            //data: {projectID:1},
+            dataType: "jsonp",                
+            jsonpCallback: 'fnsuccesscallback'
+        }).done(function(data,textStatus, xhr){
+            $(id).html(xhr.status);
+        }).fail(function(){
+            $(id).html("404 not found from Alan");
+        });
+    }
+    API.jsonplib = function(input,id,url){
+        var _input = $(input).val();
+        var _url = url + _input +"/json";
+        $.jsonp({
+            url:_url,
+            callbackParameter: "callback",
+            complete: function(xOptions, textStatus){
+                $(id).html(textStatus);
+            },
+            error: function() {
+                // Will be notified of an error requesting 'a-service'
+                $(id).html("error from Alan")
+            }
+        });
+    }
     API.GetCategories = function(){
         var returnText = '';
         $.get("./mysqlGetCategories.php",function(){
