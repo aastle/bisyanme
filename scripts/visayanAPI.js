@@ -260,7 +260,7 @@ var visayan = (function () {
     
     //get a synonym for the Engish word entered in the dataentry page
 
-    API.jsonplib = function(input,id,url){
+    API.jsonplib = function(input,id,url,insert){
         var _input = $(input).val();
         var _url = url + _input +"/json";
         $.jsonp({
@@ -269,12 +269,15 @@ var visayan = (function () {
             complete: function(xOptions, textStatus){
                 var message = "";
                 if(textStatus === "success"){
-                    message = "spelled correctly";
+                    message = "Correct";
+                    $(id).html(message).css("color","green");
+                    $(insert).removeAttr("disabled");
                 }else if(textStatus === "error"){
-                    message = "misspelled word!";
+                    message = "Misspelled";
+                    $(id).html(message).css("color","red");
+                    $(insert).attr("disabled","disabled");
                 }
-                    
-                $(id).html(message);
+                
             },
             error: function() {
                 // Will be notified of an error requesting 'a-service'
