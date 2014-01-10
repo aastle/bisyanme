@@ -20,12 +20,20 @@
                 //var buttonVal = $("#insertButton").val();
                     
                 //visayan.ajax_insert("#resultTagId","#english","#cebuano","./mysql/insert.php"); 
-                visayan.jsonplib("#english","#bighugelabs",
-                "http://words.bighugelabs.com/api/2/faf56bfe40e03e6aa55935fa70b79e39/")
+                
+                // Perform psuedo spell checking with bighugelabs web service
                 $("#english").val("");
                 $("#cebuano").val("");
                         
             }); 
+            $("#english").focusin(function(){
+               $("#insertButton ").removeAttr("disabled"); 
+            });
+            $("#english").focusout(function(){
+                 visayan.jsonplib("#english","#bighugelabs",
+                "http://words.bighugelabs.com/api/2/faf56bfe40e03e6aa55935fa70b79e39/",
+                "#insertButton");               
+            });
             $("#updateButton").click(function(e) {
                 e.preventDefault();
                 visayan.ajax_update("#resultTagId","#english","#cebuano","./mysql/update.php"); 
@@ -99,8 +107,9 @@
             <div><br/></div>
             <div><span id="resultTagId" style="font-size:medium;font-weight:bold;"></span></div>
             <div><br/></div>
-            <div>Results from BigHugeLabs</div>
+            <div>English Spelling:</div>           
             <div id="bighugelabs"></div>
+            <div><br/></div>
             <div>
             <button type="submit" role="button" id="insertButton" aria-disabled="false" value="insert" 
                     class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
