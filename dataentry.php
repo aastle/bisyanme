@@ -19,7 +19,7 @@
                 e.preventDefault(); 
                 //var buttonVal = $("#insertButton").val();
                     
-                //visayan.ajax_insert("#resultTagId","#english","#cebuano","./mysql/insert.php"); 
+                visayan.ajax_insert("#resultTagId","#english","#cebuano","./mysql/insert.php"); 
                 
                 // Perform psuedo spell checking with bighugelabs web service
                 $("#english").val("");
