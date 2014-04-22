@@ -1,3 +1,7 @@
+<?php 
+	if ( session_id() == '' )
+		session_start();    
+?><!DOCTYPE html>
 <html>
     <head>
         <title>Bisayan.me</title>
@@ -6,11 +10,6 @@
         <link href="css/Site.css" rel="stylesheet" type="text/css" />
         <script src="scripts/jquery-1.8.3.min.js" type="text/javascript"></script>
         <script src="scripts/visayanAPI.js" type="text/javascript"></script>
-<?php 
-    session_start();
-    
-    
-?>
         <script type='text/javascript'> 
             $(document).ready(function(){ 
                 $("#copyright").html(visayan.SetCopyright);
@@ -41,8 +40,6 @@
                 });
    
             }); 
-	
- 
         </script> 
     </head>
     <body>
